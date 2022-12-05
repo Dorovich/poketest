@@ -6,12 +6,24 @@ pokemon_t* spawn_riolu (void) {
     riolu->nick = NULL;
     riolu->owner = NULL;
     set_types(riolu, Fighting, None);
-    /* stats =>      HP, ATK, DEF, SATK, SDEF, SPD */
-    set_stats(riolu, 40, 70,  40,  35,   40,   60);
-    /* attacks        Slot, AttackId */
-    set_attack(riolu, 1,    QuickAttack);
-    set_attack(riolu, 2,    Counter);
-    set_attack(riolu, 3,    Endure);
-    set_attack(riolu, 4,    Feint);
+    set_stats(riolu, 40, 70, 40, 35, 40, 60);
+    set_attack(riolu, 1, QuickAttack);
+    set_attack(riolu, 2, Counter);
+    set_attack(riolu, 3, Endure);
+    set_attack(riolu, 4, Feint);
     return riolu;
+}
+
+pokemon_t* spawn_shaymin (void) {
+    pokemon_t* shaymin = alloc_mem();
+    shaymin->name = "Shaymin";
+    shaymin->nick = NULL;
+    shaymin->owner = NULL;
+    set_types(shaymin, Grass, None);
+    set_stats(shaymin, 100, 100, 100, 100, 100, 100);
+    set_attack(shaymin, 1, QuickAttack);
+    set_attack(shaymin, 2, Counter);
+    set_attack(shaymin, 3, Endure);
+    set_attack(shaymin, 4, Feint);
+    return shaymin;
 }
