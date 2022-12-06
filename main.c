@@ -16,7 +16,7 @@ int main (int argc, char** argv) {
     len = sprintf(msg, "¡Adelante, %s!\n", riolu->name);
     if (write(1, msg, len) < 0) exit(1);
 
-    printf("\n");
+    printf("\n"); //*TURNO 1**************************************************/
 
     len = sprintf(msg, "¡%s usó %s!\n", riolu->name, riolu->attacks->name1);
     if (write(1, msg, len) < 0) exit(1);
@@ -29,7 +29,7 @@ int main (int argc, char** argv) {
     }
     if (write(1, msg, len) < 0) exit(1);
 
-    printf("\n");
+    printf("\n"); //*TURNO 2**************************************************/
 
     len = sprintf(msg, "¡%s usó %s!\n", shaymin->name, shaymin->attacks->name1);
     if (write(1, msg, len) < 0) exit(1);
