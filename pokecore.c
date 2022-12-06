@@ -1,4 +1,5 @@
-#include "poketest.h"
+#include "pokecore.h"
+#include "moves.h"
 
 pokemon_t* alloc_mem (void) {
     pokemon_t* new_pkmn = (pokemon_t*)malloc(sizeof(pokemon_t));
@@ -27,7 +28,7 @@ void set_stats (pokemon_t* pkmn, int hp, int atk, int def, int satk, int sdef, i
 }
 
 void set_attack (pokemon_t* pkmn, int slot, int atkid) {
-    void (**attack_func)(pokemon_t*, pokemon_t*);
+    int (**attack_func)(pokemon_t*, pokemon_t*);
     switch (slot) {
         case 1:
             attack_func = &pkmn->attacks->slot1;
@@ -64,8 +65,3 @@ void set_attack (pokemon_t* pkmn, int slot, int atkid) {
             exit(1);
     }
 }
-
-void quick_attack (pokemon_t* caster, pokemon_t* target) {}
-void counter (pokemon_t* caster, pokemon_t* target) {}
-void endure (pokemon_t* caster, pokemon_t* target) {}
-void feint (pokemon_t* caster, pokemon_t* target) {}

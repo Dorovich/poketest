@@ -1,9 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "pokedex.h"
 
 int main (int argc, char** argv) {
     char msg[256];
     int len;
+    srand(time(NULL));
 
     pokemon_data shaymin = spawn_shaymin();
     len = sprintf(msg, "¡Un %s salvaje apareció!\n", shaymin->name);

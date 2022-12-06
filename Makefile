@@ -1,12 +1,18 @@
 all: poketest
 
-poketest: poketest.o main.o
-	gcc -O3 -Wall -o poketest poketest.o main.o
+poketest: pokecore.o pokedex.o main.o moves.o
+	gcc -O3 -Wall -o poketest pokecore.o main.o pokedex.o moves.o
 
-poketest.o: poketest.c poketest.h
-	gcc -O3 -Wall -o poketest.o poketest.c -c
+pokecore.o: pokecore.c pokecore.h
+	gcc -O3 -Wall -o pokecore.o pokecore.c -c
 
-main.o: main.c pokedex.h poketest.h
+pokedex.o: pokedex.c pokedex.h pokecore.h
+	gcc -O3 -Wall -o pokedex.o pokedex.c -c
+
+moves.o: moves.c moves.h pokecore.h
+	gcc -O3 -Wall -o moves.o moves.c -c
+
+main.o: main.c pokecore.h
 	gcc -O3 -Wall -o main.o main.c -c
 
 clean:
