@@ -29,18 +29,24 @@ void set_stats (pokemon_t* pkmn, int hp, int atk, int def, int satk, int sdef, i
 
 void set_attack (pokemon_t* pkmn, int slot, int atkid) {
     int (**attack_func)(pokemon_t*, pokemon_t*);
+    char** attack_name;
+
     switch (slot) {
         case 1:
             attack_func = &pkmn->attacks->slot1;
+            attack_name = &pkmn->attacks->name1;
             break;
         case 2:
             attack_func = &pkmn->attacks->slot2;
+            attack_name = &pkmn->attacks->name2;
             break;
         case 3:
             attack_func = &pkmn->attacks->slot3;
+            attack_name = &pkmn->attacks->name3;
             break;
         case 4:
             attack_func = &pkmn->attacks->slot4;
+            attack_name = &pkmn->attacks->name4;
             break;
         default:
             perror("INVALID SLOT");
@@ -50,18 +56,23 @@ void set_attack (pokemon_t* pkmn, int slot, int atkid) {
     switch (atkid) {
         case QuickAttack:
             *attack_func = quick_attack;
+            *attack_name = "Quick attack";
             break;
         case Counter:
             *attack_func = counter;
+            *attack_name = "Counter";
             break;
         case Endure:
             *attack_func = endure;
+            *attack_name = "Endure";
             break;
         case Feint:
             *attack_func = feint;
+            *attack_name = "Feint";
             break;
         default:
             perror("INVALID ATTACK ID");
             exit(1);
     }
 }
+

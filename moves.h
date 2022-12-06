@@ -6,7 +6,7 @@
 /* calculate attack's damage from certain parameters */
 int calc_damage (int caster_level, int attack_stat, int attack_power, int defence, double type_bonus, double effectiveness);
 /* calculate attack's effectiveness from its type and the target's */
-double calc_effectiveness (int attack_type, pokemon_t* target);
+double calc_effectiveness (int attack_type, int target_type);
 
 int quick_attack (pokemon_t* caster, pokemon_t* target);
 int counter (pokemon_t* caster, pokemon_t* target);

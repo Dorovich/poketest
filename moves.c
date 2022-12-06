@@ -1,4 +1,5 @@
 #include "moves.h"
+#include "pokecore.h"
 
 int calc_damage (int caster_level, int attack_stat, int attack_power, int defence, double type_bonus, double effectiveness) {
     int attack_rand = rand()%16 + 85;
@@ -7,13 +8,24 @@ int calc_damage (int caster_level, int attack_stat, int attack_power, int defenc
     return (int)round(damage);
 }
 
-double calc_effectiveness (int attack_type, pokemon_t* target) {
-    /* cosas */
+double calc_effectiveness (int attacker_type, int defender_type) {
+    if (defender_type == None || attacker_type == None) return NORMAL;
+    switch (type_chart[attacker_type][defender_type]) {
+        case -1:
+            return IMMUNE;
+        case 0:
+            return WEAK;
+        case 2:
+            return EFFECTIVE;
+        default:
+            return NORMAL;
+    }
 }
 
 int quick_attack (pokemon_t* caster, pokemon_t* target) {
-    double bonus = (caster->type1 == Normal ? 1.5 : 1.0);
-    double effec = calc_effectiveness(Normal, target);
+    int attack_type = Normal;
+    double bonus = (caster->type1 == attack_type || caster->type2 == attack_type ? 1.5 : 1.0);
+    double effec = calc_effectiveness(attack_type, target->type1) * calc_effectiveness(attack_type, target->type2);
     return calc_damage(caster->level, caster->ATK, 40, target->DEF, bonus, effec);
 }
 
