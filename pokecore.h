@@ -32,10 +32,10 @@ struct attacks_t {
 };
 
 /* possible pokemon types */
-enum type_e { Normal, Fire, Water, Grass, Electric, Ice, Fighting, Poison, Ground, Flying, Psychic, Bug, Rock, Ghost, Dragon, Dark, Steel, Fairy, None };
+enum type_e { Normal, Fire, Water, Grass, Electric, Ice, Fighting, Poison, Ground, Flying, Psychic, Bug, Rock, Ghost, Dragon, Dark, Steel, Fairy, NoType };
 
 /* possible attacks to be used */
-enum attack_e { QuickAttack, Counter, Endure, Feint };
+enum attack_e { QuickAttack, Tackle, Ember, NoAttack };
 
 /* pokemon genders */
 enum gender_e { Male, Female, Genderless };
@@ -70,6 +70,8 @@ static char type_chart[18][18] = {
 #define NORMAL 1.0
 #define EFFECTIVE 2.0
 
+/* create an error message and halt the program */
+void exiterror (const char* msg, int errnum);
 /* allocate memory for a new pokemon */
 pokemon_t* alloc_mem (void);
 /* free memory of a pokemon */

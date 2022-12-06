@@ -9,9 +9,8 @@ int calc_damage (int caster_level, int attack_stat, int attack_power, int defenc
 double calc_effectiveness (int attack_type, int target_type);
 
 int quick_attack (pokemon_t* caster, pokemon_t* target);
-int counter (pokemon_t* caster, pokemon_t* target);
-int endure (pokemon_t* caster, pokemon_t* target);
-int feint (pokemon_t* caster, pokemon_t* target);
+int tackle (pokemon_t* caster, pokemon_t* target);
+int ember (pokemon_t* caster, pokemon_t* target);
 /* NOTE: attacks return damage dealt */
 
 #endif
