@@ -59,7 +59,7 @@ void set_attack (pokemon_t* pkmn, int slot, int atkid) {
             attack_id = &pkmn->attacks->id4;
             break;
         default:
-            exiterror("INVALID SLOT", 1);
+            exiterror("INVALID ATTACK SLOT", 1);
     }
 
     switch (atkid) {
