@@ -8,6 +8,7 @@
 
 typedef struct pokemon_t pokemon_t;
 typedef struct attacks_t attacks_t;
+typedef struct vstats_t vstats_t;
 typedef struct pokemon_t* pokemon_data;
 
 struct pokemon_t {
@@ -15,11 +16,13 @@ struct pokemon_t {
     char* nick; /* nickname set by owner. must be NULL if owner is NULL */
     char* owner; /* pokemon owner. NULL if wild */
     int gender; /* pokemon's gender */
+    int pokedexn; /* pokedex entry number */
     int level, exp; /* pokemon's level and experience points */
     int type1, type2; /* pokemon's types. type1 is mandatory, type2 can be NULL */
-    int HP, ATK, DEF, SATK, SDEF, SPD; /* stats */
     int actHP; /* current pokemon's HP */
+    int HP, ATK, DEF, SATK, SDEF, SPD; /* stats */
     attacks_t* attacks; /* attack moves */
+    vstats_t* vstats; /* iv and ev values */
 };
 
 struct attacks_t {
@@ -31,14 +34,26 @@ struct attacks_t {
     int (*slot4)(pokemon_t*, pokemon_t*);
 };
 
+struct vstats_t {
+    int baseHP, baseATK, baseDEF, baseSATK, baseSDEF, baseSPD; /* base stat values */
+    int ivHP, ivATK, ivDEF, ivSATK, ivSDEF, ivSPD; /* IVs */
+    int evHP, evATK, evDEF, evSATK, evSDEF, evSPD; /* EVs */
+};
+
 /* possible pokemon types */
 enum type_e { Normal, Fire, Water, Grass, Electric, Ice, Fighting, Poison, Ground, Flying, Psychic, Bug, Rock, Ghost, Dragon, Dark, Steel, Fairy, NoType };
 
 /* possible attacks to be used */
 enum attack_e { QuickAttack, Tackle, Ember, NoAttack };
 
-/* pokemon genders */
+/* possible status effects */
+enum status_e { Burned, Frozen, Paralized, Poisoned, Asleep, BadlyPoisoned, NoStatus };
+
+/* possible pokemon genders */
 enum gender_e { Male, Female, Genderless };
+
+/* pokemon stats */
+enum stats_e { Hp, Atk, Def, SAtk, SDef };
 
 /* type effectiveness matrix (column is defender, row is attacker).
  * 1: normal effectiveness, 0: weak, -1: immune, 2: effective */
@@ -78,9 +93,13 @@ pokemon_t* alloc_mem (void);
 void despawn (pokemon_t* pkmn);
 /* set types of a pokemon */
 void set_types (pokemon_t* pkmn, int type1, int type2);
-/* set stats of a pokemon */
+/* set base stats of a pokemon. pokemon's level and ivs/evs must have been set */
 void set_stats (pokemon_t* pkmn, int hp, int atk, int def, int satk, int sdef, int spd);
 /* set attack of a pokemon on a certain slot */
 void set_attack (pokemon_t* pkmn, int slot, int atkid);
+/* calculate new current stats from base stat value, level, iv and ev values */
+void update_stats (pokemon_t* pkmn);
+/* generate iv and ev stats */
+void generate_vstats (pokemon_t* pkmn);
 
 #endif

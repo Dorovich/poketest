@@ -1,10 +1,10 @@
 #include "moves.h"
 #include "pokecore.h"
 
-int calc_damage (int caster_level, int attack_stat, int attack_power, int defence, double type_bonus, double effectiveness) {
+int calc_damage (int caster_level, int attack_stat, int attack_power, int defence_stat, double type_bonus, double effectiveness) {
     if (effectiveness == IMMUNE) return 0;
     int attack_rand = rand()%16 + 85;
-    double damage = ((0.2 * caster_level + 1) * attack_stat * attack_power)/(25 * defence) + 2;
+    double damage = ((0.2 * caster_level + 1) * attack_stat * attack_power)/(25 * defence_stat) + 2;
     damage *= 0.01 * type_bonus * effectiveness * attack_rand;
     return (int)round(damage);
 }
