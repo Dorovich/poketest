@@ -4,7 +4,7 @@
 #include "pokecore.h"
 
 /* calculate attack's damage from certain parameters */
-int calc_damage (int caster_level, int attack_stat, int attack_power, int defence_stat, double type_bonus, double effectiveness);
+int calc_damage (pokemon_t* caster, pokemon_t* target, int attack_stat_id, int defence_stat_id, int power, double stab, double effectiveness);
 /* calculate attack's effectiveness from its type and the target's */
 double calc_effectiveness (int attack_type, int target_type);
 

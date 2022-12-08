@@ -17,6 +17,7 @@ pokemon_t* spawn_riolu (void) {
     set_attack(riolu, 2, Tackle);
     set_attack(riolu, 3, NoAttack);
     set_attack(riolu, 4, NoAttack);
+    clear_mods(riolu);
     return riolu;
 }
 
@@ -36,6 +37,7 @@ pokemon_t* spawn_shaymin (void) {
     set_attack(shaymin, 2, Tackle);
     set_attack(shaymin, 3, NoAttack);
     set_attack(shaymin, 4, NoAttack);
+    clear_mods(shaymin);
     return shaymin;
 }
 
@@ -55,6 +57,7 @@ pokemon_t* spawn_mimikyu (void) {
     set_attack(mimikyu, 2, Tackle);
     set_attack(mimikyu, 3, NoAttack);
     set_attack(mimikyu, 4, NoAttack);
+    clear_mods(mimikyu);
     return mimikyu;
 }
 
@@ -74,6 +77,7 @@ pokemon_t* spawn_chimchar (void) {
     set_attack(chimchar, 2, Ember);
     set_attack(chimchar, 3, NoAttack);
     set_attack(chimchar, 4, NoAttack);
+    clear_mods(chimchar);
     return chimchar;
 }
 
@@ -93,5 +97,6 @@ pokemon_t* spawn_archen (void) {
     set_attack(archen, 2, NoAttack);
     set_attack(archen, 3, NoAttack);
     set_attack(archen, 4, NoAttack);
+    clear_mods(archen);
     return archen;
 }

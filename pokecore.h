@@ -21,6 +21,7 @@ struct pokemon_t {
     int type1, type2; /* pokemon's types. type1 is mandatory, type2 can be NULL */
     int actHP; /* current pokemon's HP */
     int HP, ATK, DEF, SATK, SDEF, SPD; /* stats */
+    int modATK, modDEF, modSATK, modSDEF, modSPD; /* combat stat modifiers */
     attacks_t* attacks; /* attack moves */
     vstats_t* vstats; /* iv and ev values */
 };
@@ -53,7 +54,10 @@ enum status_e { Burned, Frozen, Paralized, Poisoned, Asleep, BadlyPoisoned, NoSt
 enum gender_e { Male, Female, Genderless };
 
 /* pokemon stats */
-enum stats_e { Hp, Atk, Def, SAtk, SDef };
+enum stats_e { Hp, Atk, Def, SAtk, SDef, Spd };
+
+/* stat modifiers */
+enum mods_e { Debuff6=-6, Debuff5=-5, Debuff4=-4, Debuff3=-3, Debuff2=-2, Debuff1=-1, NoMod=0, Buff1=1, Buff2=2, Buff3=3, Buff4=4, Buff5=5, Buff6=6 };
 
 /* type effectiveness matrix (column is defender, row is attacker).
  * 1: normal effectiveness, 0: weak, -1: immune, 2: effective */
@@ -99,7 +103,17 @@ void set_stats (pokemon_t* pkmn, int hp, int atk, int def, int satk, int sdef, i
 void set_attack (pokemon_t* pkmn, int slot, int atkid);
 /* calculate new current stats from base stat value, level, iv and ev values */
 void update_stats (pokemon_t* pkmn);
+/* get stat from pokemon */
+int translate_stat (pokemon_t* pkmn, int stat_id);
 /* generate iv and ev stats */
 void generate_vstats (pokemon_t* pkmn);
+/* resolve an attack. returns the damage dealt by the attack. if not NULL, attack_name is set to the attac's name */
+int do_attack(pokemon_t *caster, pokemon_t *target, int slot, char** attack_name);
+/* clear stat modifications */
+void clear_mods (pokemon_t* pkmn);
+/* set a stat modification */
+void add_mod (pokemon_t* pkmn, int stat, int stages);
+/* get stat modification from a pokemon */
+double translate_mod (pokemon_t* pkmn, int stat_id);
 
 #endif

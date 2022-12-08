@@ -45,6 +45,26 @@ void update_stats (pokemon_t* pkmn) {
     pkmn->actHP = pkmn->HP;
 }
 
+int translate_stat (pokemon_t* pkmn, int stat_id) {
+    switch (stat_id) {
+        case Hp:
+            return pkmn->HP;
+        case Atk:
+            return pkmn->ATK;
+        case Def:
+            return pkmn->DEF;
+        case SAtk:
+            return pkmn->SATK;
+        case SDef:
+            return pkmn->SDEF;
+        case Spd:
+            return pkmn->SPD;
+        default:
+            exiterror("INVALID STAT @translate_stat", 1);
+    }
+    return 0;
+}
+
 void set_attack (pokemon_t* pkmn, int slot, int atkid) {
     int (**attack_func)(pokemon_t*, pokemon_t*);
     char** attack_name;
@@ -72,7 +92,7 @@ void set_attack (pokemon_t* pkmn, int slot, int atkid) {
             attack_id = &pkmn->attacks->id4;
             break;
         default:
-            exiterror("INVALID ATTACK SLOT", 1);
+            exiterror("INVALID ATTACK SLOT @set_attack", 1);
     }
 
     switch (atkid) {
@@ -97,7 +117,7 @@ void set_attack (pokemon_t* pkmn, int slot, int atkid) {
             *attack_id = Ember;
             break;
         default:
-            exiterror("INVALID ATTACK ID", 1);
+            exiterror("INVALID ATTACK ID @set_attack", 1);
     }
 }
 
@@ -114,4 +134,119 @@ void generate_vstats (pokemon_t* pkmn) {
     pkmn->vstats->evSATK = 0;
     pkmn->vstats->evSDEF = 0;
     pkmn->vstats->evSPD = 0;
+}
+
+int do_attack (pokemon_t* caster, pokemon_t* target, int slot, char** attack_name) {
+    int (*attack_func)(pokemon_t*, pokemon_t*);
+    switch (slot) {
+        case 1:
+            attack_func = caster->attacks->slot1;
+            *attack_name = caster->attacks->name1;
+            break;
+        case 2:
+            attack_func = caster->attacks->slot2;
+            *attack_name = caster->attacks->name2;
+            break;
+        case 3:
+            attack_func = caster->attacks->slot3;
+            *attack_name = caster->attacks->name3;
+            break;
+        case 4:
+            attack_func = caster->attacks->slot4;
+            *attack_name = caster->attacks->name4;
+            break;
+        default:
+            exiterror("INVALID SLOT @do_attack", 1);
+    }
+    int damage = attack_func(caster, target);
+    if (damage != 0) target->actHP -= damage;
+    return damage;
+}
+
+void clear_mods (pokemon_t* pkmn) {
+    pkmn->modATK = NoMod;
+    pkmn->modDEF = NoMod;
+    pkmn->modSATK = NoMod;
+    pkmn->modSDEF = NoMod;
+    pkmn->modSPD = NoMod;
+}
+
+void add_mod (pokemon_t* pkmn, int stat, int stages) {
+    int* stat_modifier;
+    switch (stat) {
+        case Atk:
+            stat_modifier = &pkmn->modATK;
+            break;
+        case Def:
+            stat_modifier = &pkmn->modDEF;
+            break;
+        case SAtk:
+            stat_modifier = &pkmn->modSATK;
+            break;
+        case SDef:
+            stat_modifier = &pkmn->modSDEF;
+            break;
+        case Spd:
+            stat_modifier = &pkmn->modSPD;
+            break;
+        default:
+            exiterror("INVALID STAT @add_mod", 1);
+    }
+    *stat_modifier += stages;
+    if (*stat_modifier > 6) *stat_modifier = 6;
+    else if (*stat_modifier < -6) *stat_modifier = -6;
+}
+
+double translate_mod (pokemon_t* pkmn, int stat_id) {
+    int val;
+    switch (stat_id) {
+        case Atk:
+            val = pkmn->modATK;
+            break;
+        case Def:
+            val = pkmn->modDEF;
+            break;
+        case SAtk:
+            val = pkmn->modSATK;
+            break;
+        case SDef:
+            val = pkmn->modSDEF;
+            break;
+        case Spd:
+            val = pkmn->modSPD;
+            break;
+        default:
+            exiterror("INVALID STAT @translate_mod", 1);
+    }
+    switch (val) {
+        case Debuff6:
+            return 0.25;
+        case Debuff5:
+            return 0.28;
+        case Debuff4:
+            return 0.33;
+        case Debuff3:
+            return 0.40;
+        case Debuff2:
+            return 0.50;
+        case Debuff1:
+            return 0.66;
+        case NoMod:
+            return 1;
+        case Buff1:
+            return 1.5;
+        case Buff2:
+            return 2;
+        case Buff3:
+            return 2.5;
+        case Buff4:
+            return 3;
+        case Buff5:
+            return 3.5;
+        case Buff6:
+            return 4;
+        default:
+            exiterror("INVALID MODIFICATION VALUE @translate_mod", 1);
+    }
+    return 0;
 }

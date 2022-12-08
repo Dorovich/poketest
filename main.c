@@ -10,32 +10,10 @@ void printmsg (char* msg, int msg_len) {
 
 void make_attack (pokemon_data caster, pokemon_data target, int slot, char* buffer) {
     int len, damage;
-    int (*attack_func)(pokemon_t*, pokemon_t*);
     char* attack_name;
-    switch (slot) {
-        case 1:
-            attack_func = caster->attacks->slot1;
-            attack_name = caster->attacks->name1;
-            break;
-        case 2:
-            attack_func = caster->attacks->slot2;
-            attack_name = caster->attacks->name2;
-            break;
-        case 3:
-            attack_func = caster->attacks->slot3;
-            attack_name = caster->attacks->name3;
-            break;
-        case 4:
-            attack_func = caster->attacks->slot4;
-            attack_name = caster->attacks->name4;
-            break;
-        default:
-            exiterror("INVALID SLOT", 1);
-    }
+    damage = do_attack(caster, target, slot, &attack_name);
     len = sprintf(buffer, "¡%s usó %s!\n", caster->name, attack_name);
     printmsg(buffer, len);
-    damage = attack_func(caster, target);
-    target->actHP -= damage;
     if (target->actHP > 0) {
         len = sprintf(buffer, "¡Causó %d puntos de daño!\nSalud de %s: %d / %d\n\n", damage, target->name, target->actHP, target->HP);
     } else {
