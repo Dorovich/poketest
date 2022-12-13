@@ -28,7 +28,7 @@ pokemon_t* spawn_shaymin (void) {
     shaymin->owner = NULL;
     shaymin->pokedexn = 492;
     shaymin->gender = Genderless;
-    shaymin->level = 70;
+    shaymin->level = 50;
     shaymin->exp = 0;
     set_types(shaymin, Grass, NoType);
     generate_vstats(shaymin);
@@ -88,7 +88,7 @@ pokemon_t* spawn_archen (void) {
     archen->owner = NULL;
     archen->pokedexn = 566;
     archen->gender = Male;
-    archen->level = 9;
+    archen->level = 20;
     archen->exp = 0;
     set_types(archen, Rock, Flying);
     generate_vstats(archen);
