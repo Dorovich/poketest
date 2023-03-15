@@ -51,7 +51,7 @@ int main (int argc, char** argv) {
 
     make_attack(chimchar, shaymin, 2, msg);
 
-    //************************************************************************/
+    /************************************************************************/
 
     pokemon_data archen = spawn_archen();
     len = sprintf(msg, "¡Un %s salvaje apareció, y parece furioso!\n", archen->name);
